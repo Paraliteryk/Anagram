@@ -1,0 +1,43 @@
+
+h1
+{
+	background-color: green;
+	color:blue;	
+	font-size: 20px;
+	font-family:Verdana;
+	padding: 10px;
+	text-align:center;
+	width:500px;
+	margin-left:auto;
+	margin-right:auto;
+	
+}
+
+
+
+body
+{
+/*	background-image:url(hoffman.png);*/
+	background-color: lightgreen;
+}
+
+a
+{
+	color:green;
+}
+.error
+{
+	color:red;
+	
+}
+
+#gracz
+{
+	width:200px;
+	border-style: double;
+	border-color:black;
+font-size: 14px;
+	font-family:Verdana;
+	padding: 10px;
+	text-align:center;
+}
