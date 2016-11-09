@@ -1,4 +1,5 @@
-﻿h1
+
+h1
 {
 	background-color: green;
 	color:white;	
@@ -12,9 +13,12 @@
 	
 }
 
+
+
 body
 {
 	background-image:url(hoffman.png);
+	background-color: lightgreen;
 }
 
 a
@@ -32,9 +36,26 @@ a
 	width:200px;
 	border-style: double;
 	border-color:black;
-	/*background-color: green;
-	*/font-size: 14px;
+font-size: 14px;
 	font-family:Verdana;
 	padding: 10px;
 	text-align:center;
+}
+
+#wynik
+{
+	margin-left:700px;
+	margin-right:auto;
+	margin-bottom:auto;
+	font-size: 25px;
+	font-family:Verdana;
+}
+
+#trening
+{
+	
+	margin-left:800px;
+	margin-right:auto;
+	margin-bottom:auto;
+	
 }
