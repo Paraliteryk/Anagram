@@ -1,7 +1,8 @@
 <?php
 
 	session_start();
-	
+	unset($_SESSION['wyswietl']);
+	unset($_SESSION['poprawnepl']);
 ?>
 
 <!DOCTYPE HTML>
@@ -25,13 +26,41 @@ echo "<p> Najlepszy wynik: 0 <p>";
 <a href="statystyki.php" target="_blank">Zobacz dokładne statystyki</a>
 <a href="zmiania.php" >Zmień dane</a>
 <a href="index.php" >Wyloguj się</a>
+<p><p>
+<a href="update.php"  >Wprowadź update do słownika</a>
  </div>
+ 
+ <p>
+ 
+ <div id="wynik">
+  <?php
+  if(isset($_SESSION['wynik']))
+	{
+		echo $_SESSION['wynik'];
+		unset($_SESSION['wynik']);
+	}	
+	?>
+  <p> <p>
+ </div>	
+ 
+ <div id="trening">
+ 
+<form action="panel2.php">
+  <input type="submit" value="trening">
+  </form>
+ 
+ </div>
+
+
+
 <?php
  if(isset($_SESSION['zmieniono']))
 	{
 		echo $_SESSION['zmieniono'];
 		unset($_SESSION['zmieniono']);
 	}
+	
+	
 ?>
 </body>
 </html>
