@@ -1,0 +1,123 @@
+
+h1
+{
+	background-color: green;
+	color:white;	
+	font-size: 20px;
+	font-family:Verdana;
+	padding: 10px;
+	text-align:center;
+	width:500px;
+	margin-left:auto;
+	margin-right:auto;
+	
+}
+
+
+
+body
+{
+	background-image:url(hoffman.png);
+	background-color: lightgreen;
+}
+
+a
+{
+	color:green;
+}
+.error
+{
+	color:red;
+	
+}
+
+#gracz
+{
+	width:200px;
+	border-style: double;
+	border-color:black;
+font-size: 14px;
+	font-family:Verdana;
+	padding: 10px;
+	text-align:center;
+}
+
+#wynik
+{
+	margin-left:700px;
+	margin-right:auto;
+	margin-bottom:auto;
+	font-size: 25px;
+	font-family:Verdana;
+}
+
+#trening
+{
+	
+	margin-left:800px;
+	margin-right:auto;
+	margin-bottom:auto;
+	
+}
+
+#gra
+{
+	margin-top:50px;
+	margin-bottom:50px;
+	margin-left:780px;
+	margin-right:auto;
+	
+}
+
+#poziom
+{
+	margin-top:10px;
+	margin-bottom:10px;
+	margin-left:-65px;
+	margin-right:auto;
+	
+}
+
+
+#pojemnik
+{
+	width:900px;
+	margin-left:auto;
+	margin-right:auto;
+
+}
+
+#haslo
+{
+	width:900px;
+	margin-top:50px;
+	margin-bottom:50px;
+	text-align:center;
+	font-size:80px;
+
+}
+
+#odpowiedz
+{
+	
+	margin-top:50px;
+	width:900px;
+	text-align:center;
+
+}
+#dobreodp
+{
+	float:right;
+	width:900px;
+	text-align:center;
+	font-size:40px;
+}
+
+#opis
+{
+	float:left;
+	margin-top:50px;
+	width:900px;
+	text-align:center;
+
+}
