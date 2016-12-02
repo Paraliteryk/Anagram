@@ -1,10 +1,76 @@
 ﻿<?php
-
 	session_start();
-	require_once "connect.php";
-	//mysqli_report(MYSQLI_REPORT_STRICT);
+?>
+
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+	<meta charset="utf-8"/>
+	<title>Anagram - rejestracja</title>
+	<link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+
+<body>
+<h1>Anagram</h1>
+<form  method="post">
+
+Login:<br/> <input type="text" name="login"/> <br/>
+
+<?php
+
+	if(isset($_SESSION['zladlugosc']))
+	{
+			echo '<div class="error">'.$_SESSION['zladlugosc'].'</div>';
+			unset($_SESSION['zladlugosc']);
+	}
 	
+	if(isset($_SESSION['zleznaki']))
+	{
+			echo '<div class="error">'.$_SESSION['zleznaki'].'</div>';
+			unset($_SESSION['zleznaki']);
+	}
 	
+?>
+Hasło:<br/> <input type="password" name="haslo"/> <br/>
+Powtórz hasło:<br/> <input type="password" name="haslo2"/> <br/>
+
+<?php
+
+	if(isset($_SESSION['zlehaslo']))
+	{
+			echo '<div class="error">'.$_SESSION['zlehaslo'].'</div>';
+			unset($_SESSION['zlehaslo']);
+	}
+?>
+
+E-mail:<br/> <input type="text" name="mail"/> <br/>
+
+<?php
+
+	if(isset($_SESSION['zlymail']))
+	{
+			echo '<div class="error">'.$_SESSION['zlymail'].'</div>';
+			unset($_SESSION['zlymail']);
+	}
+?>
+
+<br/>
+<input type="submit" value="zarejestruj się">
+<?php
+
+	if(isset($_SESSION['puste']))
+	{
+			echo '<div class="error">'.$_SESSION['puste'].'</div>';
+			unset($_SESSION['puste']);
+	}
+?>
+</form>
+</body>
+</html>
+
+
+<?php
+	require_once "connect.php";		
 	//sprawdzanie poprawnosci danych wpisanych w formularzu
 	if(isset($_POST['mail']))
 	{
@@ -49,7 +115,7 @@
 		}
 		
 		$mail=$_POST['mail'];
-		$mailspr=filter_var($mail,FILTER_SANITIZE_EMAIL);
+		$mailspr=filter_var($mail,FILTER_SANITIZE_EMAIL); 
 		if( filter_var($mailspr,FILTER_SANITIZE_EMAIL)==false || $mail!=$mailspr)
 		{
 			$zarejestrowano=false;
@@ -122,68 +188,3 @@
 
 ?>
 
-<!DOCTYPE HTML>
-<html lang="pl">
-<head>
-	<meta charset="utf-8"/>
-	<title>Anagram - rejestracja</title>
-	<link rel="stylesheet" href="style.css" type="text/css"/>
-</head>
-
-<body>
-
-<form  method="post">
-
-Login:<br/> <input type="text" name="login"/> <br/>
-
-<?php
-
-	if(isset($_SESSION['zladlugosc']))
-	{
-			echo '<div class="error">'.$_SESSION['zladlugosc'].'</div>';
-			unset($_SESSION['zladlugosc']);
-	}
-	
-	if(isset($_SESSION['zleznaki']))
-	{
-			echo '<div class="error">'.$_SESSION['zleznaki'].'</div>';
-			unset($_SESSION['zleznaki']);
-	}
-	
-?>
-Hasło:<br/> <input type="password" name="haslo"/> <br/>
-Powtórz hasło:<br/> <input type="password" name="haslo2"/> <br/>
-
-<?php
-
-	if(isset($_SESSION['zlehaslo']))
-	{
-			echo '<div class="error">'.$_SESSION['zlehaslo'].'</div>';
-			unset($_SESSION['zlehaslo']);
-	}
-?>
-
-E-mail:<br/> <input type="text" name="mail"/> <br/>
-
-<?php
-
-	if(isset($_SESSION['zlymail']))
-	{
-			echo '<div class="error">'.$_SESSION['zlymail'].'</div>';
-			unset($_SESSION['zlymail']);
-	}
-?>
-
-<br/>
-<input type="submit" value="zarejestruj się">
-<?php
-
-	if(isset($_SESSION['puste']))
-	{
-			echo '<div class="error">'.$_SESSION['puste'].'</div>';
-			unset($_SESSION['puste']);
-	}
-?>
-</form>
-</body>
-</html>
