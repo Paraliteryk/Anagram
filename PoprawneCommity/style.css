@@ -2,7 +2,7 @@
 h1
 {
 	background-color: green;
-	color:blue;	
+	color:white;	
 	font-size: 20px;
 	font-family:Verdana;
 	padding: 10px;
@@ -17,7 +17,7 @@ h1
 
 body
 {
-/*	background-image:url(hoffman.png);*/
+	background-image:url(hoffman.png);
 	background-color: lightgreen;
 }
 
@@ -40,4 +40,22 @@ font-size: 14px;
 	font-family:Verdana;
 	padding: 10px;
 	text-align:center;
+}
+
+#wynik
+{
+	margin-left:700px;
+	margin-right:auto;
+	margin-bottom:auto;
+	font-size: 25px;
+	font-family:Verdana;
+}
+
+#trening
+{
+	
+	margin-left:800px;
+	margin-right:auto;
+	margin-bottom:auto;
+	
 }

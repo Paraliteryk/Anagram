@@ -1,7 +1,8 @@
 <?php
 
 	session_start();
-	
+	unset($_SESSION['wyswietl']);
+	unset($_SESSION['poprawnepl']);
 ?>
 
 <!DOCTYPE HTML>
@@ -30,18 +31,36 @@ echo "<p> Najlepszy wynik: 0 <p>";
  </div>
  
  <p>
+ 
+ <div id="wynik">
+  <?php
+  if(isset($_SESSION['wynik']))
+	{
+		echo $_SESSION['wynik'];
+		unset($_SESSION['wynik']);
+	}	
+	?>
+  <p> <p>
+ </div>	
+ 
  <div id="trening">
-		<form action="trening.php">
+ 
+<form action="panel2.php">
   <input type="submit" value="trening">
   </form>
-
+ 
  </div>
+
+
+
 <?php
  if(isset($_SESSION['zmieniono']))
 	{
 		echo $_SESSION['zmieniono'];
 		unset($_SESSION['zmieniono']);
 	}
+	
+	
 ?>
 </body>
 </html>
