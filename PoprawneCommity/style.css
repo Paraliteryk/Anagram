@@ -2,14 +2,17 @@
 h1
 {
 	background-color: green;
-	color:white;	
-	font-size: 20px;
+	color:white;
+	font-style: italic;
+	letter-spacing:	5px;
+	font-size: 25px;
 	font-family:Verdana;
 	padding: 10px;
 	text-align:center;
 	width:500px;
 	margin-left:auto;
 	margin-right:auto;
+
 	
 }
 
@@ -31,6 +34,36 @@ a
 	
 }
 
+
+#menu
+{
+	text-align:center;
+	width:860px;
+	margin-left:auto;
+	margin-right:auto;
+	background-color: gray;
+	margin-top:20px;
+	color:#ffffff;
+	padding:10px;
+	
+}
+.option
+{
+	text-align:center;
+	float:left;
+	min-width:100px;
+	height:25px;
+	font-size:18px;
+	padding:10px;
+	border-right:2px solid #444444;
+	opacity:0.6;
+}
+
+.option:hover
+{
+	background-color:#000000;
+	cursor: pointer;
+}
 #gracz
 {
 	width:200px;
@@ -40,6 +73,22 @@ font-size: 14px;
 	font-family:Verdana;
 	padding: 10px;
 	text-align:center;
+	float:left;
+}
+
+#najlepsi
+{
+	background-color: #ffffcc;
+	border:2px solid #999900;
+	padding: 5px;
+	font-size: 15px;
+	margin-right:10px;
+	margin-bottom:10px;
+	margin-left:10px;
+	float:right;
+	width:220px;
+	text-align:center;
+	
 }
 
 #wynik
@@ -118,6 +167,16 @@ font-size: 14px;
 	float:left;
 	margin-top:50px;
 	width:900px;
+	text-align:center;
+
+}
+
+#zegar
+{
+	font-size: 40px;
+	font-family:Verdana;
+	float:center;
+	width:300px;
 	text-align:center;
 
 }

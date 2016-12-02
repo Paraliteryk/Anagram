@@ -7,34 +7,54 @@ if(!isset($_SESSION['wyswietl']))
 	$_SESSION['max']=20;
 	$_SESSION['dobreodp']=0;
 	$_SESSION['licznik']=0;
-
-}
-
 	
- 
-
+		$dzien = date("j");
+		$miesiac = date("n");
+		$rok =date("Y");
+		$godzina = date("G");
+		$minuta = date("i");
+		$sekunda = date("s");
+		$czasp=$sekunda+60*$minuta+3600*$godzina + 86400*$dzien + 2592000*$miesiac + 31536000*$rok;
+		$_SESSION['czas']=$czasp;
+}
 
  ?>
 <!DOCTYPE HTML>
 <html lang="pl">
-<head>
+<head >
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title>Anagram</title>
 	<link rel="stylesheet" href="style.css" type="text/css"/>
+	<script type="text/javascript" src="jquery.js"></script>
 	
+	
+	
+	
+	<script type="text/javascript" src="timer.js">
+		
+</script>
+
+
 </head>
 
-<body>
+<input type="hidden" id="pole" value="" />
+<?php
 
+ global $a, $b;
+ ?>
+
+		<body onload="odliczanie();">
 
 <h1>Anagram</h1>
 
 
 
 
+<div id="zegar">
 
 
-
+ </div>
+ 
 <div id="pojemnik">
 	<div id="haslo">
 	
@@ -173,9 +193,7 @@ if(!isset($_SESSION['wyswietl']))
 				
 				$_SESSION['dobreodp']++;
 				echo'<p><p><span style="color:darkgreen;">'.$odpowiedz.'</span>';
-				echo '<a href="http://www.sjp.pl/'.$_SESSION['wyswietl'].'" target="_blank" style="color:darkorange" > (sprawdź znaczenie)</a>';
-
-				
+				echo '<a href="http://www.sjp.pl/'.$_SESSION['wyswietl'].'" target="_blank" style="color:darkorange" > (sprawdź znaczenie)</a>';			
 			}
 			else
 			{
@@ -208,21 +226,45 @@ if(!isset($_SESSION['wyswietl']))
 	$_SESSION['licznik']++;
 	if($_SESSION['licznik']>$_SESSION['max'])
 	{
+		$dzien = date("j");
+		$miesiac = date("n");
+		$rok =date("Y");
+		$godzina = date("G");
+		$minuta = date("i");
+		$sekunda = date("s");
+		$czask=$sekunda+60*$minuta+3600*$godzina + 86400*$dzien + 2592000*$miesiac + 31536000*$rok;
+		$sekundy=$czask-$_SESSION['czas'];
 		require_once "connect.php";
 		$polaczenie = new mysqli($host,$db_user,$db_password,$db_name);
 		mysqli_set_charset($polaczenie, "utf8");
 		$punkty=$_SESSION['dobreodp'];
 		$poziom=$_SESSION['l'];
 		$nick=$_SESSION['nick'];
-		$polaczenie->query("INSERT INTO ranking VALUES('$nick','$punkty',NULL,'$poziom')");
+		$polaczenie->query("INSERT INTO ranking VALUES('$nick','$punkty','$sekundy','$poziom')");
 		$polaczenie->close();
 		
-			$_SESSION['wynik']="Twój wynik:".$_SESSION['dobreodp']."/".($_SESSION['licznik']-1);
+		$minuta=0;
+			while($sekundy>60)
+			{
+				$minuta=$minuta+1;
+				$sekundy=$sekundy-60;
+				
+			}
+			
+		if($sekundy<10 && $minuta<10)
+			$_SESSION['wynik']="Twój wynik:".$_SESSION['dobreodp']."/".($_SESSION['licznik']-1)."<p>Czas: 0".$minuta.":0".$sekundy;
+		else if($minuta<10)
+			$_SESSION['wynik']="Twój wynik:".$_SESSION['dobreodp']."/".($_SESSION['licznik']-1)."<p>Czas: 0".$minuta.":".$sekundy;
+		else if( $sekundy<10)
+			$_SESSION['wynik']="Twój wynik:".$_SESSION['dobreodp']."/".($_SESSION['licznik']-1)."<p>Czas: ".$minuta.":0".$sekundy;
+		else
+			$_SESSION['wynik']="Twój wynik:".$_SESSION['dobreodp']."/".($_SESSION['licznik']-1)."<p>Czas: ".$minuta." :".$sekundy;
 			unset($_SESSION['wyswietl']);
 			unset($_SESSION['l']);
 			unset($_SESSION['licznik']);
 			unset($_SESSION['dobreodp']);
 			unset($_SESSION['licznik']);
+			unset($_SESSION['czas']);
 						header('Location:panel.php');
 						exit();
 	}
