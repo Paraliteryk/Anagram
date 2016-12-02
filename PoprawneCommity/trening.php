@@ -10,21 +10,70 @@ if(!isset($_SESSION['wyswietl']))
 	$_SESSION['srodek']=$_POST['srodek'];
 	$_SESSION['dobreodp']=0;
 	$_SESSION['licznik']=0;
-}
-?>
 
+}
+
+	 if (isset($_POST['szach']) && $_POST['szach'] =="1") {
+ 
+ require_once "connect.php";
+		try
+		{
+		$polaczenie = new mysqli($host,$db_user,$db_password,$db_name);
+		mysqli_set_charset($polaczenie, "utf8");
+		$dodawane= $_SESSION['wyswietl'];
+		$nick=$_SESSION['nick'];
+		$rezultat=$polaczenie->query("SELECT slowo FROM slownikGracza WHERE slowo='$dodawane'");
+							$ilosc=$rezultat->num_rows;
+							if( $ilosc>0)
+								echo'<span style="color:blue;">Słowo jest już w słowniku</span>';
+							else
+								{
+
+									if($polaczenie->query("INSERT INTO slownikgracza VALUES('$nick','$dodawane')"))
+									{
+										echo'<span style="color:blue;">Dodałeś słowo</span>';
+									}
+									else
+									{
+										throw new Exception($polaczenie->error);
+									}
+								}
+		}
+								catch(Exception $e)
+								{
+									echo '<span style="color:red;">Błąd serwera</span>';
+								}
+								
+								
+ 
+ }
+
+
+ ?>
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title>Anagram</title>
 	<link rel="stylesheet" href="style.css" type="text/css"/>
+	
 </head>
 
 <body>
+
+
 <h1>Anagram</h1>
 
-<?php
+
+
+
+
+
+
+<div id="pojemnik">
+	<div id="haslo">
+	
+	<?php
 		require_once "connect.php";
 		$polaczenie = new mysqli($host,$db_user,$db_password,$db_name);
 		mysqli_set_charset($polaczenie, "utf8");
@@ -180,12 +229,10 @@ if(!isset($_SESSION['wyswietl']))
 
 		$poprawne=str_replace($ogonki, $bez_ogonkow, $poprawne);
 			$tab = array();
-			for($i = 0; $i < strlen($poprawne); $i++)
-					$tab[$i] = $poprawne[$i];
 			$tab2=array();					
             for($i=0;$i<strlen($poprawne);$i++)
             {
-                $tab2[$i]=$tab[$i];
+                $tab2[$i]=$poprawne[$i];
             }
             for($i=0;$i<strlen($poprawne);$i++)
             {
@@ -200,16 +247,25 @@ if(!isset($_SESSION['wyswietl']))
             }
 			$tab=str_replace($bez_ogonkow, $ogonki,  $tab);
 			for($i = 0; $i < strlen($poprawne); $i++)
-					echo "<span style=\"font-size: 40px;\"> $tab[$i] </span>";
+					echo  $tab[$i];
 		
 ?>	
-<form method="post" >
+	
+	</div>
+	
+	<div id="odpowiedz">
+	
+	<form method="post" >
 
 <br/> <input type="text" autofocus name="odp"/>
 <input type="submit"  value="ok">
 
-</form>
+</div>
+<div id="opis">
+	
+	
 <?php
+
 	if(!empty($_POST['odp']))
 		$odpowiedz=$_POST['odp'];
 	else
@@ -230,27 +286,70 @@ if(!isset($_SESSION['wyswietl']))
 			{
 				
 				$_SESSION['dobreodp']++;
+				echo'<p><p><span style="color:darkgreen;">'.$odpowiedz.'</span>';
+				echo '<a href="http://www.sjp.pl/'.$_SESSION['wyswietl'].'" target="_blank" style="color:darkorange" > (sprawdź znaczenie)</a>';
+
 				
 			}
 			else
 			{
 				if(isset($_SESSION['wyswietl']))
 				{
-					echo  $_SESSION['wyswietl'];
+					echo'<p><p><span style="color:red;">'.$_SESSION['wyswietl'].'</span>';
+					if($_SESSION['licznik']!=0)
+					echo '<a href="http://www.sjp.pl/'.$_SESSION['wyswietl'].'" target="_blank" style="color:darkorange"> (sprawdź znaczenie)</a>';
+
 				}
 			}
-				
-	echo '<p><p>'.$_SESSION['dobreodp']."/".$_SESSION['licznik'];
+			if($_SESSION['licznik']!=0){
+?>
+<br/><input type="checkbox"  name="szach" value="1" />Dodaj do swojego słownika
+</form>	
+			<?php	}
+			else
+			{
+				?>
+				</form>	
+				<?php
+			}
+	
+	
+	echo '<p><p><a href="panel.php">Zakończ trening</a>';
+?>
+	
+	</div>
+<div id="dobreodp">
+	<?php
+	
+	echo '<p><p>'.$_SESSION['dobreodp']."/".$_SESSION['licznik'];	 
 	$_SESSION['licznik']++;
 	if($_SESSION['licznik']>$_SESSION['max'])
 	{
 			$_SESSION['wynik']="Twój wynik:".$_SESSION['dobreodp']."/".($_SESSION['licznik']-1);
+			unset($_SESSION['wyswietl']);
+			unset($_SESSION['l']);
+			unset($_SESSION['licznik']);
+			unset($_SESSION['poczatek']);
+			unset($_SESSION['koniec']);
+			unset($_SESSION['srodek']);
+			unset($_SESSION['dobreodp']);
+			unset($_SESSION['licznik']);
 						header('Location:panel.php');
 						exit();
 	}
+	?>
+	</div>
+	<div style="clear:both;"></div>
 	
-	echo '<p><p><a href="panel.php">Zakończ trening</a>';
-?>
+	
+	
+	
+	
+</div>
+
+
+
+
 
 
 </body>

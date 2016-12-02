@@ -59,3 +59,46 @@ font-size: 14px;
 	margin-bottom:auto;
 	
 }
+
+#pojemnik
+{
+	width:900px;
+	margin-left:auto;
+	margin-right:auto;
+
+}
+
+#haslo
+{
+	width:900px;
+	margin-top:50px;
+	margin-bottom:50px;
+	text-align:center;
+	font-size:80px;
+
+}
+
+#odpowiedz
+{
+	
+	margin-top:50px;
+	width:900px;
+	text-align:center;
+
+}
+#dobreodp
+{
+	float:right;
+	width:900px;
+	text-align:center;
+	font-size:40px;
+}
+
+#opis
+{
+	float:left;
+	margin-top:50px;
+	width:900px;
+	text-align:center;
+
+}
