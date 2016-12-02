@@ -10,7 +10,11 @@ if(!isset($_SESSION['wyswietl']))
 	$_SESSION['srodek']=$_POST['srodek'];
 	$_SESSION['dobreodp']=0;
 	$_SESSION['licznik']=0;
-
+	if (isset($_POST['twojslownik']) && $_POST['twojslownik'] =="1") 
+		$_SESSION['powtorka']=1;
+		else
+			$_SESSION['powtorka']=0;
+	
 }
 
 	 if (isset($_POST['szach']) && $_POST['szach'] =="1") {
@@ -79,147 +83,172 @@ if(!isset($_SESSION['wyswietl']))
 		mysqli_set_charset($polaczenie, "utf8");
 		if(!isset($_SESSION['wyswietl']))
 		{
-			if($_SESSION['l']=="6")
-				$rezultat=$polaczenie->query("SELECT * FROM slownik6");
-			if($_SESSION['l']=="5")
-				$rezultat=$polaczenie->query("SELECT * FROM slownik5");
-			if($_SESSION['l']=="7")
-				$rezultat=$polaczenie->query("SELECT * FROM slownik7");
+			if($_SESSION['powtorka']==1)
+				$rezultat=$polaczenie->query("SELECT * FROM slownikgracza");
+			else
+			{
+				if($_SESSION['l']=="6")
+					$rezultat=$polaczenie->query("SELECT * FROM slownik6");
+				if($_SESSION['l']=="5")
+					$rezultat=$polaczenie->query("SELECT * FROM slownik5");
+				if($_SESSION['l']=="7")
+					$rezultat=$polaczenie->query("SELECT * FROM slownik7");
+			}
+			
 			$_SESSION['rozmiar']=$rezultat->num_rows;
 		}
 		$_SESSION['wyswietl']=" ";
 		if(isset($_SESSION['poprawnepl']))
 			$_SESSION['wyswietl']=$_SESSION['poprawnepl'];
 		
-		
-		if($_SESSION['l']=="6")
+		if($_SESSION['powtorka']==1)
 		{
-			if(empty($_SESSION['poczatek']) && empty($_SESSION['srodek']) && empty($_SESSION['koniec']))
-			{
-				$idslowa=rand(1,$_SESSION['rozmiar']);
-				$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE id='$idslowa'");
-				$ilosc=$rezultat->num_rows;
+				//$idslowa=rand(1,$_SESSION['rozmiar']);
+				//$rezultat=$polaczenie->query("SELECT slowo FROM slownikgracza WHERE id='$idslowa'");
+				$nick=$_SESSION['nick'];
+				$rezultat=$polaczenie->query("SELECT slowo FROM slownikgracza WHERE nick='$nick' ORDER BY RAND() limit 1 ");
+				/*$ilosc=$rezultat->num_rows;
 
 				while($ilosc==0)
+				{
+					$idslowa=rand(1,$_SESSION['rozmiar']);
+					$rezultat=$polaczenie->query("SELECT slowo FROM slownikgracza WHERE id='$idslowa'");
+					$ilosc=$rezultat->num_rows;
+				}
+			*/
+		}
+
+		else
+		{
+			if($_SESSION['l']=="6")
+			{
+				if(empty($_SESSION['poczatek']) && empty($_SESSION['srodek']) && empty($_SESSION['koniec']))
 				{
 					$idslowa=rand(1,$_SESSION['rozmiar']);
 					$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE id='$idslowa'");
 					$ilosc=$rezultat->num_rows;
-				}
-			}
-			else
-			{
-				$wyszukaj=$_SESSION['poczatek'];
-				$wyszukaj2=$_SESSION['srodek'];
-				$wyszukaj3=$_SESSION['koniec'];
-				$ilosc=0;
-				$skoncz=0;
-				//$wyszukaj3=$_SESSION['koniec'];
-				//$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' ORDER BY RAND() limit 1 ");
-				while($ilosc==0)
-				{
-					$idslowa=rand(1,$_SESSION['rozmiar']);
-					$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' AND slowo LIKE '%$wyszukaj2%' AND slowo LIKE '%$wyszukaj3' AND id='$idslowa'");
-					$ilosc=$rezultat->num_rows;
-					$skoncz++;
-					if($skoncz>10000)
+
+					while($ilosc==0)
 					{
-						$_SESSION['blad']="Brak wystarczającej liczby słów spełniającej Twoje warunki!";
-						header('Location:panel2.php');
-						exit();
+						$idslowa=rand(1,$_SESSION['rozmiar']);
+						$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE id='$idslowa'");
+						$ilosc=$rezultat->num_rows;
 					}
 				}
-				
-				
+				else
+				{
+					$wyszukaj=$_SESSION['poczatek'];
+					$wyszukaj2=$_SESSION['srodek'];
+					$wyszukaj3=$_SESSION['koniec'];
+					$ilosc=0;
+					$skoncz=0;
+					//$wyszukaj3=$_SESSION['koniec'];
+					//$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' ORDER BY RAND() limit 1 ");
+					while($ilosc==0)
+					{
+						$idslowa=rand(1,$_SESSION['rozmiar']);
+						$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' AND slowo LIKE '%$wyszukaj2%' AND slowo LIKE '%$wyszukaj3' AND id='$idslowa'");
+						$ilosc=$rezultat->num_rows;
+						$skoncz++;
+						if($skoncz>10000)
+						{
+							$_SESSION['blad']="Brak wystarczającej liczby słów spełniającej Twoje warunki!";
+							header('Location:panel2.php');
+							exit();
+						}
+					}
+					
+					
+				}
+			
 			}
-		
-		}
-		
-		
-		if($_SESSION['l']=="5")
-		{
-			if(empty($_SESSION['poczatek']) && empty($_SESSION['srodek']) && empty($_SESSION['koniec']))
+			
+			
+			if($_SESSION['l']=="5")
 			{
-				$idslowa=rand(1,$_SESSION['rozmiar']);
-				$rezultat=$polaczenie->query("SELECT slowo FROM slownik5 WHERE id='$idslowa'");
-				$ilosc=$rezultat->num_rows;
-
-				while($ilosc==0)
+				if(empty($_SESSION['poczatek']) && empty($_SESSION['srodek']) && empty($_SESSION['koniec']))
 				{
 					$idslowa=rand(1,$_SESSION['rozmiar']);
 					$rezultat=$polaczenie->query("SELECT slowo FROM slownik5 WHERE id='$idslowa'");
 					$ilosc=$rezultat->num_rows;
-				}
-			}
-			else
-			{
-				$wyszukaj=$_SESSION['poczatek'];
-				$wyszukaj2=$_SESSION['srodek'];
-				$wyszukaj3=$_SESSION['koniec'];
-				$ilosc=0;
-				$skoncz=0;
-				//$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' ORDER BY RAND() limit 1 ");
-				while($ilosc==0)
-				{
-					$idslowa=rand(1,$_SESSION['rozmiar']);
-					$rezultat=$polaczenie->query("SELECT slowo FROM slownik5 WHERE slowo LIKE '$wyszukaj%' AND slowo LIKE '%$wyszukaj2%' AND slowo LIKE '%$wyszukaj3' AND id='$idslowa'");
-					$ilosc=$rezultat->num_rows;
-					$skoncz++;
-					if($skoncz>10000)
+
+					while($ilosc==0)
 					{
-						$_SESSION['blad']="Brak wystarczającej liczby słów spełniającej Twoje warunki!";
-						header('Location:panel2.php');
-						exit();
+						$idslowa=rand(1,$_SESSION['rozmiar']);
+						$rezultat=$polaczenie->query("SELECT slowo FROM slownik5 WHERE id='$idslowa'");
+						$ilosc=$rezultat->num_rows;
 					}
 				}
-				
-				
+				else
+				{
+					$wyszukaj=$_SESSION['poczatek'];
+					$wyszukaj2=$_SESSION['srodek'];
+					$wyszukaj3=$_SESSION['koniec'];
+					$ilosc=0;
+					$skoncz=0;
+					//$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' ORDER BY RAND() limit 1 ");
+					while($ilosc==0)
+					{
+						$idslowa=rand(1,$_SESSION['rozmiar']);
+						$rezultat=$polaczenie->query("SELECT slowo FROM slownik5 WHERE slowo LIKE '$wyszukaj%' AND slowo LIKE '%$wyszukaj2%' AND slowo LIKE '%$wyszukaj3' AND id='$idslowa'");
+						$ilosc=$rezultat->num_rows;
+						$skoncz++;
+						if($skoncz>10000)
+						{
+							$_SESSION['blad']="Brak wystarczającej liczby słów spełniającej Twoje warunki!";
+							header('Location:panel2.php');
+							exit();
+						}
+					}
+					
+					
+				}
+			
 			}
-		
-		}
-		
-		
-		if($_SESSION['l']=="7")
-		{
-			if(empty($_SESSION['poczatek']) && empty($_SESSION['srodek']) && empty($_SESSION['koniec']))
+			
+			
+			if($_SESSION['l']=="7")
 			{
-				$idslowa=rand(1,$_SESSION['rozmiar']);
-				$rezultat=$polaczenie->query("SELECT slowo FROM slownik7 WHERE id='$idslowa'");
-				$ilosc=$rezultat->num_rows;
-
-				while($ilosc==0)
+				if(empty($_SESSION['poczatek']) && empty($_SESSION['srodek']) && empty($_SESSION['koniec']))
 				{
 					$idslowa=rand(1,$_SESSION['rozmiar']);
 					$rezultat=$polaczenie->query("SELECT slowo FROM slownik7 WHERE id='$idslowa'");
 					$ilosc=$rezultat->num_rows;
-				}
-			}
-			else
-			{
-				$wyszukaj=$_SESSION['poczatek'];
-				$wyszukaj2=$_SESSION['srodek'];
-				$wyszukaj3=$_SESSION['koniec'];
-				$ilosc=0;
-				$skoncz=0;
-				//$wyszukaj3=$_SESSION['koniec'];
-				//$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' ORDER BY RAND() limit 1 ");
-				while($ilosc==0)
-				{
-					$idslowa=rand(1,$_SESSION['rozmiar']);
-					$rezultat=$polaczenie->query("SELECT slowo FROM slownik7 WHERE slowo LIKE '$wyszukaj%' AND slowo LIKE '%$wyszukaj2%' AND slowo LIKE '%$wyszukaj3' AND id='$idslowa'");
-					$ilosc=$rezultat->num_rows;
-					$skoncz++;
-					if($skoncz>10000)
+
+					while($ilosc==0)
 					{
-						$_SESSION['blad']="Brak wystarczającej liczby słów spełniającej Twoje warunki!";
-						header('Location:panel2.php');
-						exit();
+						$idslowa=rand(1,$_SESSION['rozmiar']);
+						$rezultat=$polaczenie->query("SELECT slowo FROM slownik7 WHERE id='$idslowa'");
+						$ilosc=$rezultat->num_rows;
 					}
 				}
-				
-				
+				else
+				{
+					$wyszukaj=$_SESSION['poczatek'];
+					$wyszukaj2=$_SESSION['srodek'];
+					$wyszukaj3=$_SESSION['koniec'];
+					$ilosc=0;
+					$skoncz=0;
+					//$wyszukaj3=$_SESSION['koniec'];
+					//$rezultat=$polaczenie->query("SELECT slowo FROM slownik6 WHERE slowo LIKE '$wyszukaj%' ORDER BY RAND() limit 1 ");
+					while($ilosc==0)
+					{
+						$idslowa=rand(1,$_SESSION['rozmiar']);
+						$rezultat=$polaczenie->query("SELECT slowo FROM slownik7 WHERE slowo LIKE '$wyszukaj%' AND slowo LIKE '%$wyszukaj2%' AND slowo LIKE '%$wyszukaj3' AND id='$idslowa'");
+						$ilosc=$rezultat->num_rows;
+						$skoncz++;
+						if($skoncz>10000)
+						{
+							$_SESSION['blad']="Brak wystarczającej liczby słów spełniającej Twoje warunki!";
+							header('Location:panel2.php');
+							exit();
+						}
+					}
+					
+					
+				}
+			
 			}
-		
 		}
 			$wiersz=$rezultat->fetch_assoc();
 			$poprawne=$wiersz['slowo'];
@@ -246,8 +275,11 @@ if(!isset($_SESSION['wyswietl']))
                     $tab2[$a]='11';
             }
 			$tab=str_replace($bez_ogonkow, $ogonki,  $tab);
-			for($i = 0; $i < strlen($poprawne); $i++)
+			
+			for($i = 0; $i < strlen($poprawne); $i++){
+				$tab[$i]=mb_strtoupper($tab[$i],"UTF-8");
 					echo  $tab[$i];
+			}
 		
 ?>	
 	
@@ -280,6 +312,9 @@ if(!isset($_SESSION['wyswietl']))
 		$rezultat=$polaczenie->query("SELECT slowo FROM slownik7 WHERE slowo='$odpowiedz'");
 	if($_SESSION['l']=="5")
 		$rezultat=$polaczenie->query("SELECT slowo FROM slownik5 WHERE slowo='$odpowiedz'");
+	if($_SESSION['powtorka']=="1")
+		$rezultat=$polaczenie->query("SELECT slowo FROM slownikgracza WHERE slowo='$odpowiedz'");
+
 		$ilosc=$rezultat->num_rows;
 
 			if($ilosc!=0 && $dobrelitery)
@@ -301,7 +336,7 @@ if(!isset($_SESSION['wyswietl']))
 
 				}
 			}
-			if($_SESSION['licznik']!=0){
+			if($_SESSION['licznik']!=0 && $_SESSION['powtorka']!="1"){
 ?>
 <br/><input type="checkbox"  name="szach" value="1" />Dodaj do swojego słownika
 </form>	
@@ -334,6 +369,7 @@ if(!isset($_SESSION['wyswietl']))
 			unset($_SESSION['srodek']);
 			unset($_SESSION['dobreodp']);
 			unset($_SESSION['licznik']);
+			unset($_SESSION['powtorka']);
 						header('Location:panel.php');
 						exit();
 	}

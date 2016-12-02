@@ -27,7 +27,7 @@ echo "<p> Najlepszy wynik: 0 <p>";
 <a href="zmiania.php" >Zmień dane</a>
 <a href="index.php" >Wyloguj się</a>
 <p><p>
-<a href="update.php"  >Wprowadź update do słownika</a>
+<a href="update.php"  >Wprowadź zmiany do swojego słownika</a>
  </div>
  
  <p>
@@ -51,7 +51,25 @@ echo "<p> Najlepszy wynik: 0 <p>";
  
  </div>
 
+ 
+ <div id="gra">
+ 
 
+  <input type="submit" value="gra rankingowa" onClick="document.getElementById('poziom').style.display='block';">
+	<div style="display: none" id="poziom">
+ 
+   <form action="gra.php" method="post">
+   <br/> <b>poziom</b> : <input type="radio"  name="liczba" value="5" /> łatwy <input type="radio"  name="liczba" value="6" checked="checked" /> średni <input type="radio"  name="liczba" value="7"  /> trudny
+<input type="submit"  value="ok">
+	 </form>
+</div>
+ 
+ </div>
+
+ 
+
+ 
+ 
 
 <?php
  if(isset($_SESSION['zmieniono']))

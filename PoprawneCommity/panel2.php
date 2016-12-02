@@ -39,7 +39,7 @@ echo "<p> Najlepszy wynik: 0 <p>";
  
  <p>
  
- 
+
  <div id="trening">
 	<form method="post" >	
   <input type="submit" value="trening">
@@ -61,6 +61,9 @@ echo "<p> Najlepszy wynik: 0 <p>";
 	</select>
 <br/> <b>słowa</b> : <input type="radio"  name="liczba" value="5" /> pięcioliterowe <input type="radio"  name="liczba" value="6" /> sześcioliterowe <input type="radio"  name="liczba" value="7" checked="checked" /> siedmioliterowe
 <input type="submit"  value="ok">
+
+<br/><br/><input type="checkbox"  name="twojslownik" value="1">Twój słownik
+
 <br/><br/>Filtry dodatkowe(opcjonalnie):<br/><br/>
 <b>zaczynające się od </b> :  <input name="poczatek" style="width: 50px" value="" /><br/><br/>
 <b>kończące się na</b> : &nbsp <input name="koniec" style="width: 50px" value="" /><br/><br/>
@@ -68,6 +71,8 @@ echo "<p> Najlepszy wynik: 0 <p>";
 
 
 </form>
+
+
 <?php
 if(isset($_SESSION['blad'])) //jezeli istnieje zmienna
 	{
