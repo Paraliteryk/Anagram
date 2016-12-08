@@ -1,69 +1,34 @@
-<?php
+﻿<?php
 
-	session_start();
-	unset($_SESSION['wyswietl']);
-	unset($_SESSION['poprawnepl']);
+session_start();
+
 ?>
-
 <!DOCTYPE HTML>
 <html lang="pl">
-<head>
-	<meta charset="utf-8"/>
+<head >
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title>Anagram</title>
 	<link rel="stylesheet" href="style.css" type="text/css"/>
+
 </head>
+<h1>Ranking</h1>
 
-<body>
-<h1>Anagram</h1>
 
-<div id="menu">
- <div class="option"><a href="update.php" style="color:#ffffff" >Wprowadź zmiany do słownika</a> </div>
- <div class="option"><a href="przeglad.php" style="color:#ffffff" >Przeglądaj słownik</a></div>
- <div class="option"><a href="ranking.php" style="color:#ffffff" >Przeglądaj ranking</a></div>
- <div class="option"><a href="zmiania.php" style="color:#ffffff" >Zmień dane</a> </div> 
- <div class="option"><a href="index.php" style="color:#ffffff" >Wyloguj się</a></div>
- <div class="optionR"><a href="linki.php" style="color:#ffffff" >Linki</a></div>
- <div style="clear:both;"></div>
- </div>
 
-<div id="gracz">
+ <div class="rank">
+ <b>Poziom TRUDNY</b>
+<table>
+<thead><tr>
+<th colspan="2"></th>
+<th>PUNKTY</th>
+<th>CZAS</th>
+</tr></thead><tbody>
+
 <?php
-echo " Witaj ".$_SESSION['nick'];
-echo "<p> Twój ranking: ".$_SESSION['ranking'];
-echo "<p> Wygrane: 0";
-echo "<p> Przegrane: 0";
-echo "<p> Najlepszy wynik: 0 <p>";
-?>
-<a href="statystyki.php" target="_blank">Zobacz dokładne statystyki</a>
-<a href="zmiania.php" >Zmień dane</a>
-<a href="index.php" >Wyloguj się</a>
-<p><p>
-<a href="update.php"  >Wprowadź zmiany do swojego słownika</a>
- </div>
- 
- 
- 
-  <?php
-
 		require_once "connect.php";
 		$polaczenie = new mysqli($host,$db_user,$db_password,$db_name);
 		mysqli_set_charset($polaczenie, "utf8");
-
-		?>
- <div id="najlepsi">
- 
-
- <h3 >TOP 5 - poziom trudny</h3>
-<table>
-<thead><tr>
-<th colspan="2"></th>
-<th>PUNKTY</th>
-<th>CZAS</th>
-</tr></thead><tbody>
-
-<?php
-
-		$rezultat=$polaczenie->query("SELECT * FROM ranking WHERE poziom=7 ORDER BY punkty DESC, czas LIMIT 5 ");
+		$rezultat=$polaczenie->query("SELECT * FROM ranking WHERE poziom=7 ORDER BY punkty DESC, czas");
 		$a=1;
 		while($r = $rezultat->fetch_assoc()) { 
 		?>
@@ -140,259 +105,196 @@ echo "<p> Najlepszy wynik: 0 <p>";
 
 </tr>
 </tbody></table>
-
- <h3 >TOP 5 - poziom średni</h3>
-<table>
-<thead><tr>
-<th colspan="2"></th>
-<th>PUNKTY</th>
-<th>CZAS</th>
-</tr></thead><tbody>
-
-<?php
-
-		$rezultat=$polaczenie->query("SELECT * FROM ranking WHERE poziom=6 ORDER BY punkty DESC, czas LIMIT 5 ");
-		$a=1;
-		while($r = $rezultat->fetch_assoc()) { 
-		?>
-        <tr><td >
-		<?php 
-		
-			if($a==1)
-				echo ('<b> <span style="color:#cc9900;">'.$a.'.</b> </span>');
-			else
-				echo "<b>".$a.".</b>";
-		?>
-		</td>
-		
-		<td >
-		<?php 
-			if($a==1)
-				echo ('<b> <span style="color:#cc9900;">'.$r['nick'].'</b> </span>');
-			else
-				echo "<b>".$r['nick']."</b>";
-		?>
-		</td>
-		
-		<td >
-		<?php 
-			if($a==1)
-				echo ('<b> <span style="color:#cc9900;">'.$r['punkty'].'</b> </span>');
-			else
-				echo "<b>".$r['punkty']."</b>";
-
-		?>
-		</td>
-		
-		<td >
-		<?php 
-		$minuta=0;
-		$sekunda=$r['czas'];
-			while($sekunda>60)
-			{
-				$minuta=$minuta+1;
-				$sekunda=$sekunda-60;
-				
-			}
-			if($a==1)
-			{
-				if($sekunda<10 && $minuta<10)
-				$czas="0".$minuta.":0".$sekunda;
-			else if($minuta<10)
-				$czas="0".$minuta.":".$sekunda;
-			else if( $sekunda<10)
-				$czas="".$minuta.":0".$sekunda;
-			else
-				$czas="$minuta : $sekunda";
-			echo ('<b> <span style="color:#cc9900;">'.$czas.'</b> </span>');
-			}
-				
-			else
-			{
-				if($sekunda<10 && $minuta<10)
-				echo"0".$minuta.":0".$sekunda;
-			else if($minuta<10)
-				echo"0".$minuta.":".$sekunda;
-			else if( $sekunda<10)
-				echo"".$minuta.":0".$sekunda;
-			else
-				echo "$minuta : $sekunda";
-			}
-		?>
-		</td></tr>
-	<?php
-		$a=$a+1;
-		echo "<p><p>";
-		}
-?>
-
-</tr>
-</tbody></table>
-
-
- <h3 >TOP 5 - poziom łatwy</h3>
-<table>
-<thead><tr>
-<th colspan="2"></th>
-<th>PUNKTY</th>
-<th>CZAS</th>
-</tr></thead><tbody>
-
-<?php
-$rezultat=$polaczenie->query("SELECT * FROM ranking WHERE poziom=5 ORDER BY punkty DESC, czas LIMIT 5 ");
-		$a=1;
-		while($r = $rezultat->fetch_assoc()) { 
-		?>
-        <tr><td >
-		<?php 
-		
-			if($a==1)
-				echo ('<b> <span style="color:#cc9900;">'.$a.'.</b> </span>');
-			else
-				echo "<b>".$a.".</b>";
-		?>
-		</td>
-		
-		<td >
-		<?php 
-			if($a==1)
-				echo ('<b> <span style="color:#cc9900;">'.$r['nick'].'</b> </span>');
-			else
-				echo "<b>".$r['nick']."</b>";
-		?>
-		</td>
-		
-		<td >
-		<?php 
-			if($a==1)
-				echo ('<b> <span style="color:#cc9900;">'.$r['punkty'].'</b> </span>');
-			else
-				echo "<b>".$r['punkty']."</b>";
-
-		?>
-		</td>
-		
-		<td >
-		<?php 
-		$minuta=0;
-		$sekunda=$r['czas'];
-			while($sekunda>60)
-			{
-				$minuta=$minuta+1;
-				$sekunda=$sekunda-60;
-				
-			}
-			if($a==1)
-			{
-				if($sekunda<10 && $minuta<10)
-				$czas="0".$minuta.":0".$sekunda;
-			else if($minuta<10)
-				$czas="0".$minuta.":".$sekunda;
-			else if( $sekunda<10)
-				$czas="".$minuta.":0".$sekunda;
-			else
-				$czas="$minuta : $sekunda";
-			echo ('<b> <span style="color:#cc9900;">'.$czas.'</b> </span>');
-			}
-				
-			else
-			{
-				if($sekunda<10 && $minuta<10)
-				echo"0".$minuta.":0".$sekunda;
-			else if($minuta<10)
-				echo"0".$minuta.":".$sekunda;
-			else if( $sekunda<10)
-				echo"".$minuta.":0".$sekunda;
-			else
-				echo "$minuta : $sekunda";
-			}
-		?>
-		</td></tr>
-	<?php
-		$a=$a+1;
-		echo "<p><p>";
-		}
-?>
-
-</tr>
-</tbody></table></div>
-
- </div>
-
- 
- <p>
- 
- <div id="wynik">
-  <?php
-  if(isset($_SESSION['wynik']))
-	{
-		echo $_SESSION['wynik'];
-		unset($_SESSION['wynik']);
-	}	
-	?>
-  <p> <p>
- </div>	
- 
- <div id="trening">
- 
-<button type="submit" name="" value="trening" class="Grabutton" onClick="document.getElementById('trenuj').style.display='block';">Gra treningowa</button> 
- 
- 
- 
- <button type="submit" name="" value="gra rankingowa" class="Grabutton" onClick="document.getElementById('poziom').style.display='block';">Gra rankingowa</button> 
-
-	<div style="display: none" id="poziom">
- 
-   <form action="gra.php" method="post">
-   <br/> <b>poziom</b> : <input type="radio"  name="liczba" value="5" /> łatwy <input type="radio"  name="liczba" value="6" checked="checked" /> średni <input type="radio"  name="liczba" value="7"  /> trudny
-<input type="submit"  value="ok">
-	 </form>
 </div>
- 
- <div style="display: none" id="trenuj">
-  <form action="trening.php" method="post">
-<br/> <b>ilość wyrazów w sesji:</b>  <select name="ileliter">
-		<option value="5">5</option> 
-		<option value="10">10 </option> 
-		<option value="15">15</option>
-		<option value="20">20</option> 
-		<option value="25">25</option> 
-		<option value="30">30</option> 
-		<option value="40">40</option> 
-		<option value="50">50</option> 
-		<option value="60">60</option> 
-		<option value="80">80</option> 
-		<option value="100">100</option>
-
-	</select>
-<br/> <b>słowa</b> : <input type="radio"  name="liczba" value="5" /> pięcioliterowe <input type="radio"  name="liczba" value="6" /> sześcioliterowe <input type="radio"  name="liczba" value="7" checked="checked" /> siedmioliterowe
-<input type="submit"  value="ok">
-
-<br/><br/><input type="checkbox"  name="twojslownik" value="1">Twój słownik
-
-<br/><br/>Filtry dodatkowe(opcjonalnie):<br/><br/>
-<b>zaczynające się od </b> :  <input name="poczatek" style="width: 50px" value="" /><br/><br/>
-<b>kończące się na</b> : &nbsp <input name="koniec" style="width: 50px" value="" /><br/><br/>
-<b>zawierające cząstkę</b>:  <input name="srodek" style="width: 50px" value="" /><br/> <br/>
 
 
-</form>
- </div>
- 
- </div>
 
- 
- 
+<div class="rank">
+ <b>Poziom ŚREDNI</b>
+<table>
+<thead><tr>
+<th colspan="2"></th>
+<th>PUNKTY</th>
+<th>CZAS</th>
+</tr></thead><tbody>
 
 <?php
- if(isset($_SESSION['zmieniono']))
-	{
-		echo $_SESSION['zmieniono'];
-		unset($_SESSION['zmieniono']);
-	}
-	
-	
+		require_once "connect.php";
+		$polaczenie = new mysqli($host,$db_user,$db_password,$db_name);
+		mysqli_set_charset($polaczenie, "utf8");
+		$rezultat=$polaczenie->query("SELECT * FROM ranking WHERE poziom=6 ORDER BY punkty DESC, czas");
+		$a=1;
+		while($r = $rezultat->fetch_assoc()) { 
+		?>
+        <tr><td >
+		<?php 
+		
+			if($a==1)
+				echo ('<b> <span style="color:#cc9900;">'.$a.'.</b> </span>');
+			else
+				echo "<b>".$a.".</b>";
+		?>
+		</td>
+		
+		<td >
+		<?php 
+			if($a==1)
+				echo ('<b> <span style="color:#cc9900;">'.$r['nick'].'</b> </span>');
+			else
+				echo "<b>".$r['nick']."</b>";
+		?>
+		</td>
+		
+		<td >
+		<?php 
+			if($a==1)
+				echo ('<b> <span style="color:#cc9900;">'.$r['punkty'].'</b> </span>');
+			else
+				echo "<b>".$r['punkty']."</b>";
+
+		?>
+		</td>
+		
+		<td >
+		<?php 
+		$minuta=0;
+		$sekunda=$r['czas'];
+			while($sekunda>60)
+			{
+				$minuta=$minuta+1;
+				$sekunda=$sekunda-60;
+				
+			}
+			if($a==1)
+			{
+				if($sekunda<10 && $minuta<10)
+				$czas="0".$minuta.":0".$sekunda;
+			else if($minuta<10)
+				$czas="0".$minuta.":".$sekunda;
+			else if( $sekunda<10)
+				$czas="".$minuta.":0".$sekunda;
+			else
+				$czas="$minuta : $sekunda";
+			echo ('<b> <span style="color:#cc9900;">'.$czas.'</b> </span>');
+			}
+				
+			else
+			{
+				if($sekunda<10 && $minuta<10)
+				echo"0".$minuta.":0".$sekunda;
+			else if($minuta<10)
+				echo"0".$minuta.":".$sekunda;
+			else if( $sekunda<10)
+				echo"".$minuta.":0".$sekunda;
+			else
+				echo "$minuta : $sekunda";
+			}
+		?>
+		</td></tr>
+	<?php
+		$a=$a+1;
+		echo "<p><p>";
+		}
 ?>
+
+</tr>
+</tbody></table>
+</div>
+
+
+<div class="rank">
+ <b>Poziom ŁATWY</b>
+<table>
+<thead><tr>
+<th colspan="2"></th>
+<th>PUNKTY</th>
+<th>CZAS</th>
+</tr></thead><tbody>
+
+<?php
+		require_once "connect.php";
+		$polaczenie = new mysqli($host,$db_user,$db_password,$db_name);
+		mysqli_set_charset($polaczenie, "utf8");
+		$rezultat=$polaczenie->query("SELECT * FROM ranking WHERE poziom=5 ORDER BY punkty DESC, czas");
+		$a=1;
+		while($r = $rezultat->fetch_assoc()) { 
+		?>
+        <tr><td >
+		<?php 
+		
+			if($a==1)
+				echo ('<b> <span style="color:#cc9900;">'.$a.'.</b> </span>');
+			else
+				echo "<b>".$a.".</b>";
+		?>
+		</td>
+		
+		<td >
+		<?php 
+			if($a==1)
+				echo ('<b> <span style="color:#cc9900;">'.$r['nick'].'</b> </span>');
+			else
+				echo "<b>".$r['nick']."</b>";
+		?>
+		</td>
+		
+		<td >
+		<?php 
+			if($a==1)
+				echo ('<b> <span style="color:#cc9900;">'.$r['punkty'].'</b> </span>');
+			else
+				echo "<b>".$r['punkty']."</b>";
+
+		?>
+		</td>
+		
+		<td >
+		<?php 
+		$minuta=0;
+		$sekunda=$r['czas'];
+			while($sekunda>60)
+			{
+				$minuta=$minuta+1;
+				$sekunda=$sekunda-60;
+				
+			}
+			if($a==1)
+			{
+				if($sekunda<10 && $minuta<10)
+				$czas="0".$minuta.":0".$sekunda;
+			else if($minuta<10)
+				$czas="0".$minuta.":".$sekunda;
+			else if( $sekunda<10)
+				$czas="".$minuta.":0".$sekunda;
+			else
+				$czas="$minuta : $sekunda";
+			echo ('<b> <span style="color:#cc9900;">'.$czas.'</b> </span>');
+			}
+				
+			else
+			{
+				if($sekunda<10 && $minuta<10)
+				echo"0".$minuta.":0".$sekunda;
+			else if($minuta<10)
+				echo"0".$minuta.":".$sekunda;
+			else if( $sekunda<10)
+				echo"".$minuta.":0".$sekunda;
+			else
+				echo "$minuta : $sekunda";
+			}
+		?>
+		</td></tr>
+	<?php
+		$a=$a+1;
+		echo "<p><p>";
+		}
+?>
+
+</tr>
+</tbody></table>
+</div>
+<div style="clear:both;"></div>
+
+<a href="panel.php"  >Wróć na stronę główną</a>
 </body>
 </html>
- 

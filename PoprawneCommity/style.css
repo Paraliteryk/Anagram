@@ -38,7 +38,7 @@ a
 #menu
 {
 	text-align:center;
-	width:860px;
+	width:940px;
 	margin-left:auto;
 	margin-right:auto;
 	background-color: gray;
@@ -59,7 +59,25 @@ a
 	opacity:0.6;
 }
 
+.optionR
+{
+	text-align:center;
+	float:left;
+	min-width:100px;
+	height:25px;
+	font-size:18px;
+	padding:10px;
+	
+	opacity:0.6;
+}
+
 .option:hover
+{
+	background-color:#000000;
+	cursor: pointer;
+}
+
+.optionR:hover
 {
 	background-color:#000000;
 	cursor: pointer;
@@ -69,7 +87,7 @@ a
 	width:200px;
 	border-style: double;
 	border-color:black;
-font-size: 14px;
+	font-size: 14px;
 	font-family:Verdana;
 	padding: 10px;
 	text-align:center;
@@ -103,26 +121,29 @@ font-size: 14px;
 #trening
 {
 	
-	margin-left:800px;
+	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:auto;
+		text-align:center;
 	
 }
+
+#trenuj
+{
+	
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:auto;
+		text-align:center;
+	
+}
+
 
 #gra
 {
 	margin-top:50px;
 	margin-bottom:50px;
 	margin-left:780px;
-	margin-right:auto;
-	
-}
-
-#poziom
-{
-	margin-top:10px;
-	margin-bottom:10px;
-	margin-left:-65px;
 	margin-right:auto;
 	
 }
@@ -179,4 +200,66 @@ font-size: 14px;
 	width:300px;
 	text-align:center;
 
+}
+
+
+button.Grabutton {
+	margin-top:100px;
+	width: 300px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #ffffff;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(
+		top,
+		#ffd919 0%,
+		#ab0000);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#ffd919),
+		to(#ab0000));
+	-moz-border-radius: 11px;
+	-webkit-border-radius: 11px;
+	border-radius: 11px;
+	border: 0px solid #0f007d;
+	-moz-box-shadow:
+		-1px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 2px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		-1px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 2px rgba(255,255,255,0.7);
+	box-shadow:
+		-1px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 2px rgba(255,255,255,0.7);
+	text-shadow:
+		1px 0px 4px rgba(000,000,000,0.8),
+		0px 1px 0px rgba(255,255,255,0.4);
+
+
+}
+
+
+#slownik
+{
+	background-color: #D9D9F3;
+	padding-top:100px;
+	padding-bottom:100px;
+	padding-left:100px;
+	column-count: 3;
+	width:auto;
+	height:auto;
+	font-size:20px;
+}
+
+
+.rank
+{
+	float:left;
+	padding-top:100px;
+	padding-bottom:100px;
+	padding-left:150px;
+	padding-right:100px;
+	width:auto;
+	height:auto;
+	font-size:20px;
 }

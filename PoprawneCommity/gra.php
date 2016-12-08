@@ -38,10 +38,7 @@ if(!isset($_SESSION['wyswietl']))
 </head>
 
 <input type="hidden" id="pole" value="" />
-<?php
 
- global $a, $b;
- ?>
 
 		<body onload="odliczanie();">
 
@@ -163,7 +160,7 @@ if(!isset($_SESSION['wyswietl']))
 	
 	<form method="post" >
 
-<br/> <input type="text" autofocus name="odp"/>
+<br/> <input type="text" autofocus name="odp" autocomplete="off"/>
 <input type="submit"  value="ok">
 
 </div>
@@ -270,18 +267,10 @@ if(!isset($_SESSION['wyswietl']))
 	}
 	?>
 	</div>
-	<div style="clear:both;"></div>
-	
-	
-	
-	
-	
+	<div style="clear:both;"></div>	
 </div>
 
-
-
-
-
+<a href="panel.php"  >Zakończ grę</a>
 
 </body>
 </html>

@@ -5,8 +5,6 @@ var sekunda=0;
 function odliczanie()
 	{
 		var txt = document.getElementById("pole").value;
-		document.getElementById("pole").value =sekunda;
-		txt = document.getElementById("pole").value;
 		sekunda = sekunda + 1;
 		
 		if (sekunda==60)
